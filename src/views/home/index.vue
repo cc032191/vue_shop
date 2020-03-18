@@ -1,5 +1,5 @@
 <template>
-  <div>home</div>
+  <div>home组件</div>
 </template>
 
 <script>
