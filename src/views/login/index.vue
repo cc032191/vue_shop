@@ -30,7 +30,12 @@
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="btns">
-          <el-button type="primary" :plain="true" @click="registerlogin">登录</el-button>
+          <el-button
+            type="primary"
+            :plain="true"
+            @click="registerlogin"
+            @keyup.enter="registerlogin"
+          >登录</el-button>
           <el-button type="info" @click="resetlogin">重置</el-button>
         </el-form-item>
       </el-form>
@@ -56,8 +61,8 @@ export default {
     return {
       // 登录表单数据对象
       loginform: {
-        username: "",
-        password: ""
+        username: "admin",
+        password: "123456"
       },
       // 登录表单验证对象
       loginrules: {
@@ -92,13 +97,13 @@ export default {
         // console.log(result);
         // 第二种方法:
         this.$axios.post("login", this.loginform).then(res => {
-          console.log(res);
+          // console.log(res);
           // 结构赋值给data
           // const { data } = res;
           // console.log(data);
           if (res.data.meta.status !== 200)
-            return this.$message.error("用户名不存在");
-          this.$message.success("登录成功");
+            return this.$message.error(res.data.meta.msg);
+          this.$message.success(res.data.meta.msg);
           // 保存token   只应在打开期间生效  所以保存在sessionStorage中
           window.sessionStorage.setItem("token", res.data.data.token);
           // 页面跳转到home页面

@@ -2,7 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../views/login/index.vue'
 import home from '../views/home/index.vue'
-
+// 导入主页右边的组件
+import welcome from '../views/welcome/index.vue'
+import categories from '../views/categories/index.vue'
+import goods from '../views/goods/index.vue'
+import orders from '../views/orders/index.vue'
+import params from '../views/params/index.vue'
+import rights from '../views/rights/index.vue'
+import roles from '../views/roles/index.vue'
+import users from '../views/users/index.vue'
+import reports from '../views/reports/index.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -15,7 +24,46 @@ const routes = [{
   },
   {
     path: '/home',
-    component: home
+    // 只要访问home页面  就定向到welcome页面
+    redirect: '/welcome',
+    component: home,
+    children: [{
+        path: '/welcome',
+        component: welcome
+      },
+      {
+        path: '/categories',
+        component: categories
+      },
+      {
+        path: '/goods',
+        component: goods
+      },
+      {
+        path: '/orders',
+        component: orders
+      },
+      {
+        path: '/params',
+        component: params
+      },
+      {
+        path: '/rights',
+        component: rights
+      },
+      {
+        path: '/roles',
+        component: roles
+      },
+      {
+        path: '/users',
+        component: users
+      },
+      {
+        path: '/reports',
+        component: reports
+      }
+    ]
   }
 ]
 
