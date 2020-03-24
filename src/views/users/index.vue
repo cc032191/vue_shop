@@ -169,13 +169,26 @@ export default {
     },
     // 删除
     remove(id) {
-      this.$axios.delete(`users/${id}`).then(res => {
-        // window.console.log(res);
-        if (res.data.meta.status === 200) {
-          this.$message.success(res.data.meta.msg)
-          this.getuesrdata()
-        }
-      });
+      this.$confirm("确认删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$axios.delete(`users/${id}`).then(res => {
+            // window.console.log(res);
+            if (res.data.meta.status === 200) {
+              this.$message.success(res.data.meta.msg);
+              this.getuesrdata();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   }
 };

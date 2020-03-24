@@ -76,6 +76,7 @@ export default {
             if (res.data.meta.status === 201) {
               this.$message.success(res.data.meta.msg);
               this.dialogVisible = false;
+              this.$parent.getuesrdata();
               // 表单重置
               this.$refs.userForm.resetFields();
             } else {
