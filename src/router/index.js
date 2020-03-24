@@ -67,6 +67,10 @@ const routes = [{
   }
 ]
 
+// 导入进度条
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
 const router = new VueRouter({
   routes
 })
@@ -86,8 +90,13 @@ router.beforeEach((to, form, next) => {
     return next('/login')
   } else {
     // 如果有则直接放行
+    // 开启进度条
+    NProgress.start();
     next()
   }
 
+})
+router.afterEach(() => {
+  NProgress.done();
 })
 export default router

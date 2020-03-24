@@ -78,7 +78,7 @@ export default {
     // 一进入页面就取点击的路径赋值给clickPathtext
     this.clickPathtext=window.sessionStorage.getItem('Path')
     this.$axios.get("menus").then(res => {
-      window.console.log(res);
+      // window.console.log(res);
       if (res.data.meta.status === 200) {
         this.leftlist = res.data.data;
       }
