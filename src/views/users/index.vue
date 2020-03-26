@@ -139,13 +139,17 @@ export default {
       this.$axios
         .put(`users/${switchlist.id}/state/${switchlist.mg_state}`)
         .then(res => {
-          // window.console.log(res)
+          // window.console.log(res);
           if (res.data.meta.status !== 200) {
             // 状态设置回去
             switchlist.mg_state = !switchlist.mg_state;
             this.$message.error("状态更新失败");
           } else {
-            this.$message.success("状态更新成功");
+            if (res.data.data.mg_state === 0) {
+              this.$message.success("状态关闭");
+            } else {
+              this.$message.success("状态打开");
+            }
           }
         });
     },
@@ -178,6 +182,9 @@ export default {
           this.$axios.delete(`users/${id}`).then(res => {
             // window.console.log(res);
             if (res.data.meta.status === 200) {
+              if (this.userlist.length === 1) {
+                this.getuesr.pagenum -= 1;
+              }
               this.$message.success(res.data.meta.msg);
               this.getuesrdata();
             }

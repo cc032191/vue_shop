@@ -3,7 +3,6 @@
     title="修改用户信息"
     :visible.sync="dialogVisible"
     width="30%"
-    :before-close="handleClose"
     @close="reset"
   >
     <!-- 主体 -->
