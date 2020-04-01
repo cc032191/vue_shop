@@ -55,7 +55,12 @@
             ></el-button>
             <!-- 分配 -->
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+              <el-button
+                type="warning"
+                icon="el-icon-setting"
+                size="mini"
+                @click="allotrole(userId.row)"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -74,12 +79,14 @@
     <!-- 弹框 -->
     <adduser ref="adduser"></adduser>
     <amenduser ref="amenduser"></amenduser>
+    <assign ref="assign"></assign>
   </div>
 </template>
 
 <script>
 import adduser from "./components/adduser";
 import amenduser from "./components/amenduser";
+import assign from "./components/assign";
 export default {
   data() {
     return {
@@ -98,7 +105,8 @@ export default {
   },
   components: {
     adduser,
-    amenduser
+    amenduser,
+    assign
   },
   created() {
     // 一进入页面就要获取信息
@@ -196,6 +204,11 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    // 分配角色
+    allotrole(row) {
+      this.$refs.assign.dialogVisible = true;
+      this.$refs.assign.roleForm = row;
     }
   }
 };
