@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-dialog title="分配权限" :visible.sync="dialogVisible" width="40%" @close="closearr">
+    <el-dialog
+      title="分配权限"
+      :visible.sync="dialogVisible"
+      width="40%"
+      @close="closearr"
+    >
       <!-- 树形控件 -->
       <el-tree
         :data="powerlist"
@@ -21,7 +26,7 @@
 
 <script>
 export default {
-  props: ["value", "id"],
+  props: ['value', 'id'],
   data() {
     return {
       dialogVisible: false,
@@ -29,49 +34,50 @@ export default {
       powerlist: [],
       // 树形控件参数对象
       defaultProps: {
-        children: "children",
-        label: "authName"
-      }
-    };
+        children: 'children',
+        label: 'authName',
+      },
+    }
   },
   created() {
-    this.getpower();
+    this.getpower()
   },
   methods: {
     //   获取所有权限
     getpower() {
-      this.$axios.get("rights/tree").then(res => {
+      this.$axios.get('rights/tree').then((res) => {
         // window.console.log(res);
         if (res.data.meta.status === 200) {
-          this.powerlist = res.data.data;
+          this.powerlist = res.data.data
         }
-      });
+      })
     },
     // 监听对话框的关闭事件,关闭清空父组件的id值数组
     closearr() {
-      this.$parent.defKeys = [];
+      this.$parent.defKeys = []
     },
     confirmright() {
       let keys = [
         ...this.$refs.treeright.getCheckedKeys(),
-        ...this.$refs.treeright.getHalfCheckedKeys()
-      ];
-      keys = keys.join(",");
+        ...this.$refs.treeright.getHalfCheckedKeys(),
+      ]
+      keys = keys.join(',')
       // window.console.log(keys);
       // window.console.log(this.id);
       // 角色授权
-      this.$axios.post(`roles/${this.id}/rights`, { rids: keys }).then(res => {
-        // window.console.log(res);
-        if (res.data.meta.status === 200) {
-          this.$message.success(res.data.meta.msg);
-          this.$parent.getroleslist();
-          this.dialogVisible = false;
-        }
-      });
-    }
-  }
-};
+      this.$axios
+        .post(`roles/${this.id}/rights`, { rids: keys })
+        .then((res) => {
+          // window.console.log(res);
+          if (res.data.meta.status === 200) {
+            this.$message.success(res.data.meta.msg)
+            this.$parent.getroleslist()
+            this.dialogVisible = false
+          }
+        })
+    },
+  },
+}
 </script>
 
-<style>
-</style>
+<style></style>

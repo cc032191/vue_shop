@@ -27,79 +27,78 @@ import {
   passwordtest,
   usernametext,
   verifyemall,
-  phonecodetest
-} from "../../../utils/mycheck";
+  phonecodetest,
+} from '../../../utils/mycheck'
 export default {
   data() {
     return {
       // 弹框控件
       dialogVisible: false,
       userForm: {
-        username: "",
-        password: "",
-        email: "",
-        mobile: ""
+        username: '',
+        password: '',
+        email: '',
+        mobile: '',
       },
       rules: {
         username: [
-          { required: true, message: "不能为空", trigger: "blur" },
-          { validator: usernametext, trigger: "blur" }
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: usernametext, trigger: 'blur' },
         ],
         password: [
-          { required: true, message: "不能为空", trigger: "blur" },
+          { required: true, message: '不能为空', trigger: 'blur' },
           {
             min: 6,
             max: 18,
-            message: "长度在 6 到 18 个字符",
-            trigger: "blur"
+            message: '长度在 6 到 18 个字符',
+            trigger: 'blur',
           },
-          { validator: passwordtest, trigger: "blur" }
+          { validator: passwordtest, trigger: 'blur' },
         ],
         email: [
-          { required: true, message: "不能为空", trigger: "blur" },
-          { validator: verifyemall, trigger: "blur" }
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: verifyemall, trigger: 'blur' },
         ],
         mobile: [
-          { required: true, message: "不能为空", trigger: "blur" },
-          { validator: phonecodetest, trigger: "blur" }
-        ]
-      }
-    };
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: phonecodetest, trigger: 'blur' },
+        ],
+      },
+    }
   },
   methods: {
     // 验证表单
     submitForm() {
-      this.$refs.userForm.validate(valid => {
+      this.$refs.userForm.validate((valid) => {
         if (valid) {
-          this.$axios.post("users", this.userForm).then(res => {
+          this.$axios.post('users', this.userForm).then((res) => {
             // window.console.log(res);
             if (res.data.meta.status === 201) {
-              this.$message.success(res.data.meta.msg);
-              this.dialogVisible = false;
-              this.$parent.getuesrdata();
+              this.$message.success(res.data.meta.msg)
+              this.dialogVisible = false
+              this.$parent.getuesrdata()
               // 表单重置
-              this.$refs.userForm.resetFields();
+              this.$refs.userForm.resetFields()
             } else {
-              this.$message.error(res.data.meta.msg);
+              this.$message.error(res.data.meta.msg)
             }
-          });
+          })
         } else {
-          this.$message.error("验证不通过");
+          this.$message.error('验证不通过')
         }
-      });
+      })
     },
     // 取消
     canceldialog() {
       // 关闭弹框   表单重置
-      this.dialogVisible = false;
+      this.dialogVisible = false
       // 表单重置
-      this.$refs.userForm.resetFields();
+      this.$refs.userForm.resetFields()
       // 重新获取数据
-      this.$parent.getuesrdata();
-    }
-  }
-};
+      this.$parent.getuesrdata()
+    },
+  },
+}
 </script>
 
-<style>
-</style>
+<style></style>

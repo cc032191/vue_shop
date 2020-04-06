@@ -6,7 +6,12 @@
     @close="reset"
   >
     <!-- 主体 -->
-    <el-form :model="amenduserForm" :rules="rules" ref="userForm" label-width="65px">
+    <el-form
+      :model="amenduserForm"
+      :rules="rules"
+      ref="userForm"
+      label-width="65px"
+    >
       <el-form-item label="用户名" prop="username">
         <el-input v-model="amenduserForm.username" :disabled="true"></el-input>
       </el-form-item>
@@ -25,63 +30,62 @@
 </template>
 
 <script>
-import { verifyemall, phonecodetest } from "../../../utils/mycheck";
+import { verifyemall, phonecodetest } from '../../../utils/mycheck'
 export default {
   data() {
     return {
       // 弹框
       dialogVisible: false,
       amenduserForm: {
-        username: "",
-        email: "",
-        mobile: "",
-        id: ""
+        username: '',
+        email: '',
+        mobile: '',
+        id: '',
       },
       rules: {
         email: [
-          { required: true, message: "不能为空", trigger: "blur" },
-          { validator: verifyemall, trigger: "blur" }
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: verifyemall, trigger: 'blur' },
         ],
         mobile: [
-          { required: true, message: "不能为空", trigger: "blur" },
-          { validator: phonecodetest, trigger: "blur" }
-        ]
-      }
-    };
+          { required: true, message: '不能为空', trigger: 'blur' },
+          { validator: phonecodetest, trigger: 'blur' },
+        ],
+      },
+    }
   },
   methods: {
     confirmchange() {
       // window.console.log(this.amenduserForm.id);
-      this.$refs.userForm.validate(valid => {
+      this.$refs.userForm.validate((valid) => {
         if (valid) {
           this.$axios({
             url: `users/${this.amenduserForm.id}`,
-            method: "put",
+            method: 'put',
             data: {
               email: this.amenduserForm.email,
-              mobile: this.amenduserForm.mobile
-            }
-          }).then(res => {
+              mobile: this.amenduserForm.mobile,
+            },
+          }).then((res) => {
             // window.console.log(res);
             if (res.data.meta.status === 200) {
-              this.dialogVisible = false;
-              this.$message.success(res.data.meta.msg);
-              this.$parent.getuesrdata();
+              this.dialogVisible = false
+              this.$message.success(res.data.meta.msg)
+              this.$parent.getuesrdata()
             } else {
-              this.$message.error(res.data.meta.msg);
+              this.$message.error(res.data.meta.msg)
             }
-          });
+          })
         } else {
-          this.$message.error("验证不通过");
+          this.$message.error('验证不通过')
         }
-      });
+      })
     },
     reset() {
-      this.$refs.userForm.resetFields();
-    }
-  }
-};
+      this.$refs.userForm.resetFields()
+    },
+  },
+}
 </script>
 
-<style>
-</style>
+<style></style>

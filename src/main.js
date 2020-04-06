@@ -8,8 +8,10 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
+// 导入vue-table-with-tree-grid
+import treetable from 'vue-table-with-tree-grid'
 
-
+Vue.component('tree-table', treetable)
 // 导入全局样式
 import './style/index.css'
 // 导入字体图标

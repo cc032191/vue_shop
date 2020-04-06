@@ -18,7 +18,11 @@
             clearable
             @clear="getuesrdata()"
           >
-            <el-button slot="append" icon="el-icon-search" @click="getuesrdata()"></el-button>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getuesrdata()"
+            ></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
@@ -34,7 +38,10 @@
         <el-table-column prop="role_name" label="角色"></el-table-column>
         <el-table-column label="状态">
           <template v-slot:default="mg_state">
-            <el-switch v-model="mg_state.row.mg_state" @change="updateswitch(mg_state.row)"></el-switch>
+            <el-switch
+              v-model="mg_state.row.mg_state"
+              @change="updateswitch(mg_state.row)"
+            ></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -54,7 +61,12 @@
               @click="remove(userId.row.id)"
             ></el-button>
             <!-- 分配 -->
-            <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
+            <el-tooltip
+              effect="dark"
+              content="分配角色"
+              placement="top"
+              :enterable="false"
+            >
               <el-button
                 type="warning"
                 icon="el-icon-setting"
@@ -84,9 +96,9 @@
 </template>
 
 <script>
-import adduser from "./components/adduser";
-import amenduser from "./components/amenduser";
-import assign from "./components/assign";
+import adduser from './components/adduser'
+import amenduser from './components/amenduser'
+import assign from './components/assign'
 export default {
   data() {
     return {
@@ -95,124 +107,123 @@ export default {
       // 总数据条数
       total: null,
       getuesr: {
-        query: "",
+        query: '',
         // 当前页码
         pagenum: 1,
         // 每页显示条数
-        pagesize: 5
-      }
-    };
+        pagesize: 5,
+      },
+    }
   },
   components: {
     adduser,
     amenduser,
-    assign
+    assign,
   },
   created() {
     // 一进入页面就要获取信息
-    this.getuesrdata();
+    this.getuesrdata()
   },
   methods: {
     // 获取用户数据
     getuesrdata() {
       this.$axios({
-        url: "users",
-        method: "get",
-        params: this.getuesr
-      }).then(res => {
+        url: 'users',
+        method: 'get',
+        params: this.getuesr,
+      }).then((res) => {
         // window.console.log(res);
         if (res.data.meta.status !== 200) {
-          this.$message.error("获取失败");
-          return;
+          this.$message.error('获取失败')
+          return
         }
-        this.userlist = res.data.data.users;
+        this.userlist = res.data.data.users
         // window.console.log(this.userlist);
-        this.total = res.data.data.total;
-      });
+        this.total = res.data.data.total
+      })
     },
     // 每页多少条
     handleSizeChange(newpagesize) {
       // 重新赋值
-      this.getuesr.pagesize = newpagesize;
-      this.getuesrdata();
+      this.getuesr.pagesize = newpagesize
+      this.getuesrdata()
     },
     // 当前显示页码
     handleCurrentChange(newhandleCurrentChange) {
-      this.getuesr.pagenum = newhandleCurrentChange;
-      this.getuesrdata();
+      this.getuesr.pagenum = newhandleCurrentChange
+      this.getuesrdata()
     },
     // 开关状态改变    接受改变的哪一行的数据
     updateswitch(switchlist) {
       // window.console.log(switchlist);
       this.$axios
         .put(`users/${switchlist.id}/state/${switchlist.mg_state}`)
-        .then(res => {
+        .then((res) => {
           // window.console.log(res);
           if (res.data.meta.status !== 200) {
             // 状态设置回去
-            switchlist.mg_state = !switchlist.mg_state;
-            this.$message.error("状态更新失败");
+            switchlist.mg_state = !switchlist.mg_state
+            this.$message.error('状态更新失败')
           } else {
             if (res.data.data.mg_state === 0) {
-              this.$message.success("状态关闭");
+              this.$message.success('状态关闭')
             } else {
-              this.$message.success("状态打开");
+              this.$message.success('状态打开')
             }
           }
-        });
+        })
     },
     // 打开弹框
     getdialog() {
-      this.$refs.adduser.dialogVisible = true;
+      this.$refs.adduser.dialogVisible = true
     },
     // 打开修改页面
     amenduser(userid) {
       // 传值给amenduser组件
-      this.$refs.amenduser.dialogVisible = true;
-      this.$axios.get(`users/${userid}`).then(res => {
+      this.$refs.amenduser.dialogVisible = true
+      this.$axios.get(`users/${userid}`).then((res) => {
         // window.console.log(res);
         if (res.data.meta.status === 200) {
-          this.$message.success(res.data.meta.msg);
-          this.$refs.amenduser.amenduserForm = res.data.data;
+          this.$message.success(res.data.meta.msg)
+          this.$refs.amenduser.amenduserForm = res.data.data
         } else {
-          this.$message.error("获取失败");
+          this.$message.error('获取失败')
         }
-      });
+      })
     },
     // 删除
     remove(id) {
-      this.$confirm("确认删除?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
       })
         .then(() => {
-          this.$axios.delete(`users/${id}`).then(res => {
+          this.$axios.delete(`users/${id}`).then((res) => {
             // window.console.log(res);
             if (res.data.meta.status === 200) {
               if (this.userlist.length === 1) {
-                this.getuesr.pagenum -= 1;
+                this.getuesr.pagenum -= 1
               }
-              this.$message.success(res.data.meta.msg);
-              this.getuesrdata();
+              this.$message.success(res.data.meta.msg)
+              this.getuesrdata()
             }
-          });
+          })
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
+            type: 'info',
+            message: '已取消删除',
+          })
+        })
     },
     // 分配角色
     allotrole(row) {
-      this.$refs.assign.dialogVisible = true;
-      this.$refs.assign.roleForm = row;
-    }
-  }
-};
+      this.$refs.assign.dialogVisible = true
+      this.$refs.assign.roleForm = row
+    },
+  },
+}
 </script>
 
-<style lang='less' scoped>
-</style>
+<style lang="less" scoped></style>

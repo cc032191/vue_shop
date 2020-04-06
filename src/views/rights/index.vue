@@ -8,14 +8,14 @@
     </el-breadcrumb>
     <!-- 表格 -->
     <el-card>
-      <el-table :data="rightlist" border style="width: 100%" stripe>
+      <el-table :data="rightlist" border style="width: 100%;" stripe>
         <el-table-column type="index" label="#" width="50"></el-table-column>
         <el-table-column prop="authName" label="权限名称"></el-table-column>
         <el-table-column prop="path" label="路径"></el-table-column>
         <el-table-column prop="level" label="权限等级">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.level==='0'">一级</el-tag>
-            <el-tag v-else-if="scope.row.level==='1'" type="success">二级</el-tag>
+            <el-tag v-if="scope.row.level === '0'">一级</el-tag>
+            <el-tag v-else-if="scope.row.level === '1'" type="success">二级</el-tag>
             <el-tag v-else type="warning">三级</el-tag>
           </template>
         </el-table-column>
@@ -26,28 +26,28 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      rightlist: []
-    };
+      rightlist: [],
+    }
   },
-  created() {
-    this.getlist();
+  created () {
+    this.getlist()
   },
   methods: {
-    getlist() {
-      this.$axios.get("rights/list").then(res => {
-        window.console.log(res);
+    getlist () {
+      this.$axios.get('rights/list').then((res) => {
+        window.console.log(res)
         if (res.data.meta.status === 200) {
-          this.rightlist = res.data.data;
+          this.rightlist = res.data.data
         }
-      });
-    }
-  }
-};
+      })
+    },
+  },
+}
 </script>
 
-<style lang='less'>
+<style lang="less">
 .cell:first-child {
   text-align: center;
 }
