@@ -12,6 +12,9 @@ Vue.use(ElementUI);
 import treetable from 'vue-table-with-tree-grid'
 
 Vue.component('tree-table', treetable)
+
+// 导入时间处理filter
+import './filters/timefilter'
 // 导入全局样式
 import './style/index.css'
 // 导入字体图标

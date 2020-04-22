@@ -6,6 +6,7 @@ import home from '../views/home/index.vue'
 import welcome from '../views/welcome/index.vue'
 import categories from '../views/categories/index.vue'
 import goods from '../views/goods/index.vue'
+import addgoods from '../views/goods/components/addgoods.vue'
 import orders from '../views/orders/index.vue'
 import params from '../views/params/index.vue'
 import rights from '../views/rights/index.vue'
@@ -38,6 +39,10 @@ const routes = [{
       {
         path: '/goods',
         component: goods
+      },
+      {
+        path: '/goods/add',
+        component: addgoods
       },
       {
         path: '/orders',
